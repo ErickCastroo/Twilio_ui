@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import axios from 'axios';
-import Layout from '@/components/Layout';
+import { Toaster, toast } from 'sonner'
+// import Layout from '@/components/Layout';
 
 import {
   Table,
@@ -22,7 +23,7 @@ function App() {
 
   const [search, setSearch] = useState("");
   const filteredEmployees = empleados.filter((empleado) =>
-    [empleado.nombre, empleado.telefono].some((field) => field.toLowerCase().includes(search.toLowerCase()))
+    [empleado.nombre, empleado.telefono].some((field) => field.toLocaleLowerCase().includes(search.toLocaleLowerCase()))
   );
 
 
@@ -36,10 +37,10 @@ function App() {
         telefono: empleado.telefono,
       });
 
-      alert(`Mensaje enviado a ${empleado.nombre} con éxito`);
+      toast.success(`Mensaje enviado a ${empleado.nombre} con éxito`);
       console.log(response.data);
     } catch (error) {
-      alert(`Hubo un error al enviar el mensaje a ${empleado.nombre}`);
+      toast.error(`Hubo un error al enviar el mensaje a ${empleado.nombre}`);
       console.error(error);
     }
   };
@@ -47,22 +48,24 @@ function App() {
 
 
   return (
-    <Layout>
-      <div className="flex flex-col items-start bg-gray-100 p-4">
+    <div className="flex items-center justify-center h-screen w-full">
+      <Toaster position="top-right"/>
+
+      <div className="flex flex-col items-center p-4 w-full max-w-4xl"> {/* Ajusta max-w-4xl según sea necesario */}
         <input
           type="text"
           placeholder="Buscar por nombre, correo o teléfono..."
-          className="p-3 mb-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+          className="p-3 mb-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 w-full"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
         />
-        <div className=" h-auto bg-white shadow-lg rounded-lg p-6 overflow-x-auto">
-          <Table className=" border-collapse">
+        <div className="w-full bg-white shadow-lg rounded-lg p-6 overflow-x-auto">
+          <Table className="border-collapse w-full">
             <TableCaption className="text-lg font-semibold mb-4">
               Gestión de Empleados - OOMAPAS
             </TableCaption>
             <TableHeader>
-              <TableRow className="bg-gray-200">
+              <TableRow className="bg-slate-100">
                 <TableHead className="w-[100px] p-4 text-lg">Nombre</TableHead>
                 <TableHead className="p-4 text-lg">Monto</TableHead>
                 <TableHead className="p-4 text-lg">Sueldo Disponible</TableHead>
@@ -99,7 +102,7 @@ function App() {
           </Table>
         </div>
       </div>
-    </Layout>
+    </div>
   );
 }
 

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import axios from 'axios'
 import { useState } from 'react'
 import { Toaster, toast } from 'sonner'
@@ -15,8 +16,8 @@ function App() {
 
   //data de empleados simula una base de datos
   const [empleados] = useState([
-    { nombre: 'Erick Castro', monto: 1200, sueldoDisponible: 2000, telefono: '+526313446741' },
-    { nombre: 'Lolita Lopez', monto: 1800, sueldoDisponible: 2000, telefono: '+526311263636' },
+    { nombre: 'Erick Castro', monto: 1200, sueldoDisponible: 2000, telefono: '+525532256109' },
+    { nombre: 'Erick Lopez', monto: 1800, sueldoDisponible: 2000, telefono: '+525532256109' },
     { nombre: 'Juan Perez', monto: 1500, sueldoDisponible: 2000, telefono: '+526313421421' },
     { nombre: 'Maria Hernandez', monto: 1000, sueldoDisponible: 2000, telefono: '+526313421421' },
     { nombre: 'Pedro Sanchez', monto: 2000, sueldoDisponible: 2000, telefono: '+526313421421' },
@@ -68,9 +69,7 @@ function App() {
       response.data.detalles.forEach((detalle: any) => {
         if (detalle.status === 'enviado') {
           toast.success(`Mensaje enviado a ${detalle.empleado}`)
-        } else {
-          toast.error(`Error al enviar a ${detalle.empleado}: ${detalle.error}`)
-        }
+        } 
       })
 
       console.log(response.data)

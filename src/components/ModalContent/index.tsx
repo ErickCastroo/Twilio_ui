@@ -4,6 +4,7 @@ import { useState } from 'react';
 function ModalC({ empleado }: { empleado: any }) {
   const [message, setMessage] = useState('');
   const [selectedOption, setSelectedOption] = useState('value1');
+  
 
   const handleMessageChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     setMessage(event.target.value);
@@ -61,8 +62,8 @@ function ModalC({ empleado }: { empleado: any }) {
         </p>
         <div className="flex gap-4 mt-4">
           <button
-            onClick={() => console.log('Enviar mensaje')}
-            className="bg-slate-600 hover:bg-slate-700 text-white px-4 py-2 rounded-lg transition-all"
+              onClick={() => console.log('Enviar mensaje')}
+            className="w-full bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-all"
           >
             Enviar mensaje
           </button>

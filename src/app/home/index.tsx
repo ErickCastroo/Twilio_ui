@@ -14,6 +14,7 @@ import {
 
 import { Modal } from '@/components/Modal'
 import { ModalC } from '@/components/ModalContent'
+import { DrawerDemo } from '@/components/Drawer'
 
 function App() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -74,7 +75,7 @@ function App() {
       const response = await axios.post('http://localhost:3000/sendmessage', {
         empleados: empleadosParaEnviar,
       })
-      
+
       response.data.detalles.forEach((detalle: any) => {
         if (detalle.status === 'enviado') {
           toast.success(`Mensaje enviado a ${detalle.empleado}`)
@@ -104,12 +105,9 @@ function App() {
             onChange={(e) => setSearch(e.target.value)}
             className=" w-full md:w-3/4 p-2 border border-gray-300 rounded-lg "
           />
-          <button
-            onClick={() => sendMessages(selectedEmployees)}
-            className="w-full md:w-1/4 bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-all"
-          >
-            Enviar mensajes
-          </button>
+          <div className='w-full md:w-1/4 bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-all'>
+            <DrawerDemo sendMessages={sendMessages} selectedEmployees={selectedEmployees} />
+          </div>
         </div>
       </div>
       <div className='w-full bg-white shadow-lg rounded-lg p-6 overflow-x-auto'>

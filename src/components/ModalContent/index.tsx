@@ -31,8 +31,8 @@ function ModalC({ empleado }: { empleado: any }) {
           onChange={handleSelectChange}
         >
           <option value="value1">Enviar mensaje customizado</option>
-          <option value="value2">Value 2</option>
-          <option value="value3">Value 3</option>
+          <option value="value2">Descuento</option>
+          <option value="value3">Aviso</option>
         </select>
       </div>
 
@@ -63,7 +63,7 @@ function ModalC({ empleado }: { empleado: any }) {
           <button
             onClick={() => console.log('Enviar mensaje')}
             className="bg-slate-600 hover:bg-slate-700 text-white px-4 py-2 rounded-lg transition-all"
-          >z
+          >
             Enviar mensaje
           </button>
         </div>

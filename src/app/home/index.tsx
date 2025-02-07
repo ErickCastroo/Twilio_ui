@@ -167,7 +167,7 @@ function App() {
       </div>
 
       <Modal isOpen={isModalOpen} onClose={closeModal}>
-        {selectedEmployee && <ModalC sendMessages={sendMessages} />}
+        {selectedEmployee && <ModalC sendMessages={sendMessages} empleado={selectedEmployee} />}
       </Modal>
     </div>
   );

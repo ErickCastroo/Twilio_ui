@@ -1,10 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from 'react';
 
-function ModalC({ empleado }: { empleado: any }) {
+function ModalC({ sendMessages, empleado }: { 
+  sendMessages: (empleadosParaEnviar: any[], mensajePersonalizado: string, mensajeSeleccionado: string) => void; 
+  empleado: any; // Añadimos la prop empleado
+}) {
   const [message, setMessage] = useState('');
   const [selectedOption, setSelectedOption] = useState('value1');
-  
 
   const handleMessageChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     setMessage(event.target.value);
@@ -12,6 +14,16 @@ function ModalC({ empleado }: { empleado: any }) {
 
   const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedOption(event.target.value);
+    if (event.target.value !== 'value1') {
+      setMessage(`Mensaje automático para: ${event.target.options[event.target.selectedIndex].text}`);
+    } else {
+      setMessage('');
+    }
+  };
+
+  const handleSendMessage = () => {
+    // Enviamos el mensaje solo al empleado actual
+    sendMessages([empleado], message, selectedOption);
   };
 
   return (
@@ -50,9 +62,7 @@ function ModalC({ empleado }: { empleado: any }) {
           value={message}
           onChange={handleMessageChange}
           disabled={selectedOption !== 'value1'}
-
         />
-        {/* Mostrar la cantidad de caracteres */}
         <p className="text-sm text-gray-500 mt-1">
           <span className={message.length > 160 ? 'text-red-500 font-bold' : 'text-black'}>
             {message.length <= 160
@@ -62,7 +72,7 @@ function ModalC({ empleado }: { empleado: any }) {
         </p>
         <div className="flex gap-4 mt-4">
           <button
-              onClick={() => console.log('Enviar mensaje')}
+            onClick={handleSendMessage}
             className="w-full bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-all"
           >
             Enviar mensaje
@@ -72,4 +82,5 @@ function ModalC({ empleado }: { empleado: any }) {
     </>
   );
 }
+
 export { ModalC };

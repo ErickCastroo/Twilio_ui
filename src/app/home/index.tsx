@@ -12,7 +12,23 @@ import {
   TableRow,
 } from '@/components/ui/table'
 
+import { Modal } from '@/components/Modal'
+import { ModalC } from '@/components/ModalContent'
+
 function App() {
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedEmployee, setSelectedEmployee] = useState<any | null>(null);
+
+  const openModal = (empleado: any) => {
+    setSelectedEmployee(empleado);
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setSelectedEmployee(null);
+  };
 
   //data de empleados simula una base de datos
   const [empleados] = useState([
@@ -22,6 +38,7 @@ function App() {
     { nombre: 'Maria Hernandez', monto: 1000, sueldoDisponible: 2000, telefono: '+526313421421' },
     { nombre: 'Pedro Sanchez', monto: 2000, sueldoDisponible: 2000, telefono: '+526313421421' },
   ])
+
 
 
   //manejo de estados para la busqueda y seleccion de empleados
@@ -69,7 +86,7 @@ function App() {
       response.data.detalles.forEach((detalle: any) => {
         if (detalle.status === 'enviado') {
           toast.success(`Mensaje enviado a ${detalle.empleado}`)
-        } 
+        }
       })
 
       console.log(response.data)
@@ -83,25 +100,30 @@ function App() {
   return (
     <div className='flex flex-col items-center p-6 w-full max-w-4xl mx-auto'>
       <Toaster position='top-right' />
-      <input
-        type='text'
-        placeholder='Buscar por nombre o teléfono...'
-        className='p-3 mb-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 w-full'
-        value={search}
-        onChange={(e) => setSearch(e.target.value)}
-      />
-      <div className='flex gap-4 mb-4'>
-        <button
-          onClick={() => sendMessages(selectedEmployees)}
-          className='bg-slate-600 hover:bg-slate-700 text-white px-4 py-2 rounded-lg transition-all'
-        >
-          Enviar mensaje a seleccionados
-        </button>
+      <h1 className='text-3xl font-semibold mb-4'>Gestión de Mensajes</h1>
+
+      <div className="w-full bg-white shadow-lg rounded-lg p-6 mb-4">
+        <div className="flex flex-row items-center gap-2">
+          <input
+            type="text"
+            placeholder="Buscar empleados por nombre o teléfono"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            className=" w-full md:w-3/4 p-2 border border-gray-300 rounded-lg "
+          />
+          <button
+            onClick={() => sendMessages(selectedEmployees)}
+            className="w-full md:w-1/4 bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-all"
+          >
+            Enviar mensajes
+          </button>
+        </div>
+
       </div>
       <div className='w-full bg-white shadow-lg rounded-lg p-6 overflow-x-auto'>
         <Table className='border-collapse w-full'>
-          <TableCaption className='text-lg font-semibold mb-4'>
-            Gestión de Empleados - OOMAPAS
+          <TableCaption className='text-lg font-semibold text-gray-500 mb-4'>
+            Nogales Sonora - OOMAPAS
           </TableCaption>
           <TableHeader>
             <TableRow className='bg-slate-100'>
@@ -136,10 +158,10 @@ function App() {
                   <TableCell className='p-4 text-base'>{empleado.telefono}</TableCell>
                   <TableCell className='p-4 text-base'>
                     <button
-                      onClick={() => sendMessages([empleado])}
-                      className='bg-purple-600 hover:bg-purple-700 text-white px-3 py-2 rounded-lg transition-all'
+                      onClick={() => openModal(empleado)}
+                      className="hover:bg-blue-300 bg-blue-500 text-white px-3 py-1 rounded-lg transition-all"
                     >
-                      Enviar mensaje
+                      Más
                     </button>
                   </TableCell>
                 </TableRow>
@@ -154,7 +176,10 @@ function App() {
           </TableBody>
         </Table>
       </div>
-    </div>
+      <Modal isOpen={isModalOpen} onClose={closeModal}>
+        {selectedEmployee && <ModalC empleado={selectedEmployee} />}
+      </Modal>
+    </div >
   )
 }
 

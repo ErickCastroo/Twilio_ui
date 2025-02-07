@@ -20,7 +20,7 @@ function ModalC({ empleado }: { empleado: any }) {
         <span className="text-xl font-semibold">{empleado.telefono}</span>
       </div>
 
-      <p>{empleado.email ?? 'Sin correo disponible'}</p>
+      <p>{empleado.correo ?? 'Sin correo disponible'}</p>
       <hr className="h-0.5 my-2 bg-gray-400 border-0 rounded-lg dark:bg-gray-700" />
 
       <div className="my-6">

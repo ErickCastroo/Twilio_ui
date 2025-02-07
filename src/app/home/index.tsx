@@ -16,7 +16,6 @@ import { Modal } from '@/components/Modal'
 import { ModalC } from '@/components/ModalContent'
 
 function App() {
-
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedEmployee, setSelectedEmployee] = useState<any | null>(null);
 
@@ -30,29 +29,23 @@ function App() {
     setSelectedEmployee(null);
   };
 
-  //data de empleados simula una base de datos
   const [empleados] = useState([
-    { nombre: 'Erick Castro', monto: 1200, sueldoDisponible: 2000, telefono: '+525532256109' },
-    { nombre: 'Erick Lopez', monto: 1800, sueldoDisponible: 2000, telefono: '+525532256109' },
-    { nombre: 'Juan Perez', monto: 1500, sueldoDisponible: 2000, telefono: '+526313421421' },
-    { nombre: 'Maria Hernandez', monto: 1000, sueldoDisponible: 2000, telefono: '+526313421421' },
-    { nombre: 'Pedro Sanchez', monto: 2000, sueldoDisponible: 2000, telefono: '+526313421421' },
+    { nombre: 'Erick Castro', correo: 'castrocamachoerickmiguel21@gmail.com', telefono: '+526313446741' },
+    { nombre: 'Juan Perez', correo: 'example@gmail.com', telefono: '+526313421421' },
+    { nombre: 'Maria Hernandez', correo: 'example@gmail.com', telefono: '+526313421421' },
+    { nombre: 'Pedro Sanchez', correo: 'example@gmail.com', telefono: '+526313421421' },
+    { nombre: 'Lolita Lopez', correo: 'example@hotmail.com', telefono: '+526311263636' },
   ])
 
-
-
-  //manejo de estados para la busqueda y seleccion de empleados
   const [search, setSearch] = useState('')
   const [selectedEmployees, setSelectedEmployees] = useState<any[]>([])
 
-  //funcion para filtrar empleados por nombre y telefono
   const filteredEmployees = empleados.filter((empleado) =>
     [empleado.nombre, empleado.telefono].some((field) =>
       field.toLowerCase().includes(search.toLowerCase())
     )
   )
 
-  //funcion para seleccionar empleados
   const toggleEmployeeSelection = (empleado: any) => {
     setSelectedEmployees((prevState) => {
       const isSelected = prevState.some((emp) => emp.telefono === empleado.telefono)
@@ -63,7 +56,6 @@ function App() {
     })
   }
 
-  //funcion para seleccionar todos los empleados
   const toggleSelectAll = () => {
     if (selectedEmployees.length === filteredEmployees.length) {
       setSelectedEmployees([])
@@ -72,7 +64,6 @@ function App() {
     }
   }
 
-  //funcion para enviar mensajes a los empleados seleccion
   const sendMessages = async (empleadosParaEnviar: any[]) => {
     if (empleadosParaEnviar.length === 0) {
       toast.error('No hay empleados seleccionados')
@@ -83,9 +74,12 @@ function App() {
       const response = await axios.post('http://localhost:3000/sendmessage', {
         empleados: empleadosParaEnviar,
       })
+      
       response.data.detalles.forEach((detalle: any) => {
         if (detalle.status === 'enviado') {
           toast.success(`Mensaje enviado a ${detalle.empleado}`)
+        } else {
+          toast.error(`Error al enviar a ${detalle.empleado}: ${detalle.error}`)
         }
       })
 
@@ -96,7 +90,6 @@ function App() {
     }
   }
 
-  //renderizado de la aplicacion
   return (
     <div className='flex flex-col items-center p-6 w-full max-w-4xl mx-auto'>
       <Toaster position='top-right' />
@@ -118,7 +111,6 @@ function App() {
             Enviar mensajes
           </button>
         </div>
-
       </div>
       <div className='w-full bg-white shadow-lg rounded-lg p-6 overflow-x-auto'>
         <Table className='border-collapse w-full'>
@@ -135,8 +127,7 @@ function App() {
                 />
               </TableHead>
               <TableHead className='p-4 text-lg'>Nombre</TableHead>
-              <TableHead className='p-4 text-lg'>Monto</TableHead>
-              <TableHead className='p-4 text-lg'>Sueldo Disponible</TableHead>
+              <TableHead className='p-4 text-lg'>Correo</TableHead>
               <TableHead className='p-4 text-lg'>Teléfono</TableHead>
               <TableHead className='p-4 text-lg'>Acción</TableHead>
             </TableRow>
@@ -153,8 +144,7 @@ function App() {
                     />
                   </TableCell>
                   <TableCell className='p-4 text-base font-medium'>{empleado.nombre}</TableCell>
-                  <TableCell className='p-4 text-base'>${empleado.monto}</TableCell>
-                  <TableCell className='p-4 text-base'>${empleado.sueldoDisponible}</TableCell>
+                  <TableCell className='p-4 text-base'>{empleado.correo}</TableCell>
                   <TableCell className='p-4 text-base'>{empleado.telefono}</TableCell>
                   <TableCell className='p-4 text-base'>
                     <button
@@ -179,7 +169,7 @@ function App() {
       <Modal isOpen={isModalOpen} onClose={closeModal}>
         {selectedEmployee && <ModalC empleado={selectedEmployee} />}
       </Modal>
-    </div >
+    </div>
   )
 }
 

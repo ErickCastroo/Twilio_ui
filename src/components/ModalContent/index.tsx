@@ -14,16 +14,16 @@ function ModalC({ sendMessages, empleado }: {
 
   const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedOption(event.target.value);
+    // Limpiamos el mensaje personalizado cuando se selecciona una opción predeterminada
     if (event.target.value !== 'value1') {
-      setMessage(`Mensaje automático para: ${event.target.options[event.target.selectedIndex].text}`);
-    } else {
-      setMessage('');
+      setMessage(''); // Limpiamos el textarea
     }
   };
 
   const handleSendMessage = () => {
-    // Enviamos el mensaje solo al empleado actual
-    sendMessages([empleado], message, selectedOption);
+    // Si la opción seleccionada no es "Mensaje customizado", no usamos el mensaje del textarea
+    const mensajePersonalizado = selectedOption === 'value1' ? message : '';
+    sendMessages([empleado], mensajePersonalizado, selectedOption);
   };
 
   return (
@@ -44,8 +44,9 @@ function ModalC({ sendMessages, empleado }: {
           onChange={handleSelectChange}
         >
           <option value="value1">Enviar mensaje customizado</option>
-          <option value="value2">Descuento</option>
-          <option value="value3">Aviso</option>
+          <option value="descuento">Descuento</option>
+          <option value="aviso">Aviso</option>
+          <option value="promocion">Promoción</option>
         </select>
       </div>
 

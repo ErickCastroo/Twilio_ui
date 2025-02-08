@@ -15,11 +15,16 @@ function DrawerDemo({ sendMessages, selectedEmployees }: {
 
   const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedOption(event.target.value);
+    // Limpiamos el mensaje personalizado cuando se selecciona una opción predeterminada
     if (event.target.value !== 'value1') {
-      setMessage(`Mensaje automático para: ${event.target.options[event.target.selectedIndex].text}`);
-    } else {
-      setMessage('');
+      setMessage(''); // Limpiamos el textarea
     }
+  };
+
+  const handleSendMessages = () => {
+    // Si la opción seleccionada no es "Mensaje customizado", no usamos el mensaje del textarea
+    const mensajePersonalizado = selectedOption === 'value1' ? message : '';
+    sendMessages(selectedEmployees, mensajePersonalizado, selectedOption);
   };
 
   return (
@@ -39,8 +44,9 @@ function DrawerDemo({ sendMessages, selectedEmployees }: {
             onChange={handleSelectChange}
           >
             <option value="value1">Enviar mensaje customizado</option>
-            <option value="value2">Descuento</option>
-            <option value="value3">Aviso</option>
+            <option value="aviso">Aviso</option>
+            <option value="descuento">Descuento</option>
+            <option value="promocion">Promoción</option>
           </select>
 
           <div className="my-6">
@@ -66,7 +72,7 @@ function DrawerDemo({ sendMessages, selectedEmployees }: {
             </p>
           </div>
           <button
-            onClick={() => sendMessages(selectedEmployees, message, selectedOption)}
+            onClick={handleSendMessages}  
             className="w-full bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-all"
           >
             Enviar mensaje

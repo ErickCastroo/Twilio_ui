@@ -23,11 +23,11 @@ function App() {
   const [selectedEmployees, setSelectedEmployees] = useState<any[]>([]);
 
   const empleados = [
-    { nombre: 'Erick Castro', correo: 'castrocamachoerickmiguel21@gmail.com', telefono: '+526313446741' },
-    { nombre: 'Juan Perez', correo: 'example@gmail.com', telefono: '+526313421421' },
-    { nombre: 'Maria Hernandez', correo: 'example@gmail.com', telefono: '+526313421421' },
-    { nombre: 'Pedro Sanchez', correo: 'example@gmail.com', telefono: '+526313421421' },
-    { nombre: 'Lolita Lopez', correo: 'example@hotmail.com', telefono: '+526311263636' },
+    { nombre: 'Erick Castro', correo: 'castrocamachoerickmiguel21@gmail.com', telefono: '+526313446741', saldoPendiente: '100', fechaCorte: '2023-10-01' },
+    { nombre: 'Juan Perez', correo: 'example@gmail.com', telefono: '+526313421421', saldoPendiente: '150', fechaCorte: '2023-10-05' },
+    { nombre: 'Maria Hernandez', correo: 'example@gmail.com', telefono: '+526313421422', saldoPendiente: '200', fechaCorte: '2023-10-10' },
+    { nombre: 'Pedro Sanchez', correo: 'example@gmail.com', telefono: '+526313421423', saldoPendiente: '250', fechaCorte: '2023-10-15' },
+    { nombre: 'Lolita Lopez', correo: 'example@hotmail.com', telefono: '+526311263636', saldoPendiente: '300', fechaCorte: '2023-10-20' },
   ];
 
   const openModal = (empleado: any) => {
@@ -66,20 +66,17 @@ function App() {
       return;
     }
     try {
-      console.log('Enviando mensaje a:', empleadosParaEnviar);
-      console.log('Mensaje personalizado:', mensajePersonalizado);
-      console.log('Mensaje seleccionado:', mensajeSeleccionado);
-      
       const response = await axios.post('http://localhost:3000/sendmessage', {
         empleados: empleadosParaEnviar,
         mensajePersonalizado,
         mensajeSeleccionado,
       });
-
+  
       response.data.detalles.forEach((detalle: any) => {
         if (detalle.status === 'enviado') {
           toast.success(`Mensaje enviado a ${detalle.empleado}`);
           console.log(`Mensaje enviado a ${detalle.empleado}`);
+          console.log(`Mensaje enviado: ${detalle.mensaje}`); // Aquí se mostrará el mensaje
         } else {
           toast.error(`Error al enviar a ${detalle.empleado}: ${detalle.error}`);
           console.error(`Error al enviar a ${detalle.empleado}: ${detalle.error}`);
@@ -158,7 +155,7 @@ function App() {
             ) : (
               <TableRow>
                 <TableCell colSpan={5} className='text-center p-6 text-gray-500'>
-                  No se encontraron empleados.
+                  No se encontraron usuarios.
                 </TableCell>
               </TableRow>
             )}

@@ -3,3 +3,6 @@
 @tailwind utilities;
 
 
+.bg-primary {
+  background-color: #00bcd4;
+}

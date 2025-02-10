@@ -71,7 +71,7 @@ function App() {
         mensajePersonalizado,
         mensajeSeleccionado,
       });
-  
+
       response.data.detalles.forEach((detalle: any) => {
         if (detalle.status === 'enviado') {
           toast.success(`Mensaje enviado a ${detalle.empleado}`);
@@ -89,32 +89,30 @@ function App() {
   };
 
   return (
-    <div className='flex flex-col items-center p-6 w-full max-w-4xl mx-auto'>
-      <Toaster position='top-right' />
-      <h1 className='text-3xl font-semibold mb-4'>Gestión de Mensajes</h1>
+    <div className='flex flex-col items-center justify-center min-h-screen p-6 w-full max-w-4xl mx-auto'>
+        <Toaster position='top-right' />
+      <h1 className='text-3xl font-semibold mb-4 text-[#ffffff]'>Gestión de Mensajes</h1> {/* Texto gris oscuro */}
 
-      <div className='w-full bg-white shadow-lg rounded-lg p-6 mb-4'>
+      <div className='w-full shadow-xl rounded-lg p-6 mb-4 bg-bgSecundario'> {/* Fondo blanco */}
         <div className='flex flex-row items-center gap-2'>
           <input
             type='text'
             placeholder='Buscar empleados por nombre o teléfono'
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className='w-full md:w-3/4 p-2 border border-gray-300 rounded-lg'
+            className='w-full md:w-3/4 p-2 border border-[#eeeeee] rounded-lg text-[#424242]' /* Borde gris claro, texto gris oscuro */
           />
-          <div className='w-full md:w-1/4 bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-all'>
-            <DrawerDemo sendMessages={sendMessages} selectedEmployees={selectedEmployees} />
-          </div>
+          <DrawerDemo sendMessages={sendMessages} selectedEmployees={selectedEmployees} />
         </div>
       </div>
 
-      <div className='w-full bg-white shadow-lg rounded-lg p-6 overflow-x-auto'>
-        <Table className='border-collapse w-full'>
-          <TableCaption className='text-lg font-semibold text-gray-500 mb-4'>
+      <div className='w-full shadow-xl rounded-lg p-6 overflow-x-auto bg-bgSecundario'> {/* Fondo blanco */}
+        <Table className='border-collapse w-full border-[#eeeeee]'> {/* Borde gris claro */}
+          <TableCaption className='text-lg font-semibold text-[#bdbcbc] mb-4'> {/* Caption gris medio */}
             Nogales Sonora - OOMAPAS
           </TableCaption>
           <TableHeader>
-            <TableRow className='bg-slate-100'>
+            <TableRow className=''>
               <TableHead className='w-[50px] p-4 text-lg text-center'>
                 <input
                   type='checkbox'
@@ -122,16 +120,16 @@ function App() {
                   onChange={toggleSelectAll}
                 />
               </TableHead>
-              <TableHead className='p-4 text-lg'>Nombre</TableHead>
-              <TableHead className='p-4 text-lg'>Correo</TableHead>
-              <TableHead className='p-4 text-lg'>Teléfono</TableHead>
-              <TableHead className='p-4 text-lg'>Acción</TableHead>
+              <TableHead className='p-4 text-lg text-white'>Nombre</TableHead> {/* Texto gris oscuro */}
+              <TableHead className='p-4 text-lg text-white'>Correo</TableHead> {/* Texto gris oscuro */}
+              <TableHead className='p-4 text-lg text-white'>Teléfono</TableHead> {/* Texto gris oscuro */}
+              <TableHead className='p-4 text-lg text-white'>Acción</TableHead> {/* Texto gris oscuro */}
             </TableRow>
           </TableHeader>
           <TableBody>
             {filteredEmployees.length > 0 ? (
               filteredEmployees.map((empleado, index) => (
-                <TableRow key={index} className='border-b hover:bg-gray-100'>
+                <TableRow key={index} className='border-b hover:bg-[#141961]'> {/* Hover gris claro */}
                   <TableCell className='p-4 text-base text-center'>
                     <input
                       type='checkbox'
@@ -139,13 +137,13 @@ function App() {
                       onChange={() => toggleEmployeeSelection(empleado)}
                     />
                   </TableCell>
-                  <TableCell className='p-4 text-base font-medium'>{empleado.nombre}</TableCell>
-                  <TableCell className='p-4 text-base'>{empleado.correo}</TableCell>
-                  <TableCell className='p-4 text-base'>{empleado.telefono}</TableCell>
+                  <TableCell className='p-4 text-base font-medium text-white'>{empleado.nombre}</TableCell> {/* Texto gris oscuro */}
+                  <TableCell className='p-4 text-base text-white'>{empleado.correo}</TableCell> {/* Texto gris oscuro */}
+                  <TableCell className='p-4 text-base text-white'>{empleado.telefono}</TableCell> {/* Texto gris oscuro */}
                   <TableCell className='p-4 text-base'>
                     <button
                       onClick={() => openModal(empleado)}
-                      className='hover:bg-blue-300 bg-blue-500 text-white px-3 py-1 rounded-lg transition-all'
+                      className='bg-[#4caf50] hover:bg-[#43a047] text-white px-3 py-1 rounded-lg transition-all' /* Botón verde */
                     >
                       Más
                     </button>
@@ -154,7 +152,7 @@ function App() {
               ))
             ) : (
               <TableRow>
-                <TableCell colSpan={5} className='text-center p-6 text-gray-500'>
+                <TableCell colSpan={5} className='text-center p-6 text-[#bdbdbd]'> {/* Texto gris claro (deshabilitado) */}
                   No se encontraron usuarios.
                 </TableCell>
               </TableRow>

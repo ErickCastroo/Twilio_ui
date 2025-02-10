@@ -29,29 +29,29 @@ function ModalC({ sendMessages, empleado }: {
   return (
     <>
       <div className="flex-row flex mb-2 gap-1">
-        <h1 className="text-xl font-bold">{empleado.nombre}</h1>
-        <span className="text-xl font-semibold">{empleado.telefono}</span>
+        <h1 className="text-xl font-bold text-white">{empleado.nombre}</h1>
+        <span className="text-xl font-semibold text-white">{empleado.telefono}</span>
       </div>
 
-      <p>{empleado.correo ?? 'Sin correo disponible'}</p>
+      <p className='text-white'>{empleado.correo ?? 'Sin correo disponible'}</p>
       <hr className="h-0.5 my-2 bg-gray-400 border-0 rounded-lg dark:bg-gray-700" />
 
       <div className="my-6">
-        <h2 className="text-lg font-semibold">Mensajes predeterminados</h2>
+        <h2 className="text-lg font-semibold text-white">Mensajes predeterminados</h2>
         <select
-          className="w-full p-2 mt-2 border border-gray-300 rounded-lg"
+          className="w-full p-2 mt-2 border  border-gray-300 rounded-lg"
           value={selectedOption}
           onChange={handleSelectChange}
         >
           <option value="value1">Enviar mensaje customizado</option>
           <option value="descuento">Descuento</option>
           <option value="aviso">Aviso</option>
-          <option value="promocion">Promoción</option>
+          
         </select>
       </div>
 
       <div className="my-6">
-        <h2 className="text-lg font-semibold">Mensaje personalizado</h2>
+        <h2 className="text-lg font-semibold text-white">Mensaje personalizado</h2>
         <textarea
           className="w-full p-2 mt-2 border border-gray-300 rounded-lg max-h-40 overflow-y-auto"
           placeholder={
@@ -65,10 +65,10 @@ function ModalC({ sendMessages, empleado }: {
           disabled={selectedOption !== 'value1'}
         />
         <p className="text-sm text-gray-500 mt-1">
-          <span className={message.length > 160 ? 'text-red-500 font-bold' : 'text-black'}>
+          <span className={message.length > 160 ? 'text-red-500 font-bold' : 'text-white'}>
             {message.length <= 160
               ? `${message.length} caracteres`
-              : `Te estás pasando de ${Math.ceil(message.length / 160) - 1} mensaje${Math.ceil(message.length / 160) - 1 > 1 ? 's' : ''}`}
+              : `Te cobraran el valor de ${Math.ceil(message.length / 160) - 1} mensaje${Math.ceil(message.length / 160) - 1 > 1 ? 's' : ''}`}
           </span>
         </p>
         <div className="flex gap-4 mt-4">

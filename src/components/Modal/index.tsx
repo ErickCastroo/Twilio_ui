@@ -37,10 +37,10 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children }) => {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-      <div ref={modalRef} className="bg-white rounded-lg shadow-lg p-6 w-11/12 sm:w-1/2 h-3/4 relative">
+      <div ref={modalRef} className="bg-bgSecundario rounded-lg shadow-lg p-6 w-11/12 sm:w-1/2 h-3/4 relative">
         <button
           onClick={onClose}
-          className="absolute top-2 right-2 text-gray-500 hover:text-gray-700"
+          className="absolute top-2 right-2 text-white hover:text-slate-200"
         >
           <FiXOctagon size={30} />
         </button>

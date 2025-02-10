@@ -2,7 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
-
-.bg-primary {
-  background-color: #00bcd4;
+body {
+  @apply w-screen h-screen bg-no-repeat bg-cover bg-center;
+  background-image: url('./img/bg.jpg');
+  background-size: 100% 100%;
+  backdrop-filter: brightness(30%); /* Oscurece la imagen */
 }

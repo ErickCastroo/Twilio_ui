@@ -1,33 +1,33 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useState } from 'react';
-import { Drawer, DrawerContent, DrawerHeader, DrawerTitle, DrawerTrigger } from "@/components/ui/drawer";
-import { toast } from 'sonner';
+import { useState } from 'react'
+import { Drawer, DrawerContent, DrawerHeader, DrawerTitle, DrawerTrigger } from "@/components/ui/drawer"
+import { toast } from 'sonner'
 
 function DrawerDemo({ sendMessages, selectedEmployees }: {
-  sendMessages: (empleadosParaEnviar: any[], mensajePersonalizado: string, mensajeSeleccionado: string) => void;
-  selectedEmployees: any[];
+  sendMessages: (empleadosParaEnviar: any[], mensajePersonalizado: string, mensajeSeleccionado: string) => void
+  selectedEmployees: any[]
 }) {
-  const [message, setMessage] = useState('');
-  const [selectedOption, setSelectedOption] = useState('value1');
+  const [message, setMessage] = useState('')
+  const [selectedOption, setSelectedOption] = useState('value1')
 
   const handleMessageChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setMessage(event.target.value);
-  };
+    setMessage(event.target.value)
+  }
 
   const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelectedOption(event.target.value);
+    setSelectedOption(event.target.value)
     // Limpiamos el mensaje personalizado cuando se selecciona una opción predeterminada
     if (event.target.value !== 'value1') {
-      setMessage(''); // Limpiamos el textarea
+      setMessage('') // Limpiamos el textarea
     }
-  };
+  }
 
   const handleSendMessages = () => {
     // Si la opción seleccionada no es "Mensaje customizado", no usamos el mensaje del textarea
-    const mensajePersonalizado = selectedOption === 'value1' ? message : '';
-    sendMessages(selectedEmployees, mensajePersonalizado, selectedOption);
+    const mensajePersonalizado = selectedOption === 'value1' ? message : ''
+    sendMessages(selectedEmployees, mensajePersonalizado, selectedOption)
     toast.success(`Mensaje enviado a todos los usuarios seleccionados`)
-  };
+  }
 
   return (
     <Drawer>
@@ -85,7 +85,7 @@ function DrawerDemo({ sendMessages, selectedEmployees }: {
         </div>
       </DrawerContent>
     </Drawer>
-  );
+  )
 }
 
-export { DrawerDemo };
+export { DrawerDemo }

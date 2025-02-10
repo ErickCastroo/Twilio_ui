@@ -1,30 +1,30 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useState } from 'react';
+import { useState } from 'react'
 
 function ModalC({ sendMessages, empleado }: { 
-  sendMessages: (empleadosParaEnviar: any[], mensajePersonalizado: string, mensajeSeleccionado: string) => void; 
-  empleado: any; // Añadimos la prop empleado
+  sendMessages: (empleadosParaEnviar: any[], mensajePersonalizado: string, mensajeSeleccionado: string) => void 
+  empleado: any // Añadimos la prop empleado
 }) {
-  const [message, setMessage] = useState('');
-  const [selectedOption, setSelectedOption] = useState('value1');
+  const [message, setMessage] = useState('')
+  const [selectedOption, setSelectedOption] = useState('value1')
 
   const handleMessageChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setMessage(event.target.value);
-  };
+    setMessage(event.target.value)
+  }
 
   const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelectedOption(event.target.value);
+    setSelectedOption(event.target.value)
     // Limpiamos el mensaje personalizado cuando se selecciona una opción predeterminada
     if (event.target.value !== 'value1') {
-      setMessage(''); // Limpiamos el textarea
+      setMessage('') // Limpiamos el textarea
     }
-  };
+  }
 
   const handleSendMessage = () => {
     // Si la opción seleccionada no es "Mensaje customizado", no usamos el mensaje del textarea
-    const mensajePersonalizado = selectedOption === 'value1' ? message : '';
-    sendMessages([empleado], mensajePersonalizado, selectedOption);
-  };
+    const mensajePersonalizado = selectedOption === 'value1' ? message : ''
+    sendMessages([empleado], mensajePersonalizado, selectedOption)
+  }
 
   return (
     <>
@@ -81,7 +81,7 @@ function ModalC({ sendMessages, empleado }: {
         </div>
       </div>
     </>
-  );
+  )
 }
 
-export { ModalC };
+export { ModalC }

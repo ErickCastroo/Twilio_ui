@@ -16,13 +16,19 @@ import { Modal } from '@/components/Modal'
 import { ModalC } from '@/components/ModalContent'
 import { DrawerDemo } from '@/components/Drawer'
 
-
+/**
+ * Componente principal para la gestión de mensajes a empleados.
+ * Permite buscar, seleccionar, y enviar mensajes personalizados o predeterminados a los empleados.
+ * 
+ */
 function App() {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [selectedEmployee, setSelectedEmployee] = useState<any | null>(null)
   const [search, setSearch] = useState('')
   const [selectedEmployees, setSelectedEmployees] = useState<any[]>([])
-
+  /**
+ * Lista de empleados con información relevante para el envío de mensajes.
+ */
   const empleados = [
     { nombre: 'Erick Castro', correo: 'castrocamachoerickmiguel21@gmail.com', telefono: '+526313446741', saldoPendiente: '100', fechaCorte: '2023-10-01' },
     { nombre: 'Juan Perez', correo: 'example@gmail.com', telefono: '+526313421421', saldoPendiente: '150', fechaCorte: '2023-10-05' },
@@ -30,36 +36,59 @@ function App() {
     { nombre: 'Pedro Sanchez', correo: 'example@gmail.com', telefono: '+526313421423', saldoPendiente: '250', fechaCorte: '2023-10-15' },
     { nombre: 'Lolita Lopez', correo: 'example@hotmail.com', telefono: '+526311263636', saldoPendiente: '300', fechaCorte: '2023-10-20' },
   ]
-
+  /**
+ * Abre el modal con la información del empleado seleccionado.
+ * 
+ * @param empleado - El empleado seleccionado para ver más detalles.
+ */
   const openModal = (empleado: any) => {
     setSelectedEmployee(empleado)
     setIsModalOpen(true)
   }
-
+  /**
+ * Cierra el modal y resetea la información del empleado seleccionado.
+ */
   const closeModal = () => {
     setIsModalOpen(false)
     setSelectedEmployee(null)
   }
-
+  /**
+ * Cierra el modal y resetea la información del empleado seleccionado.
+ */
   const filteredEmployees = empleados.filter((empleado) =>
     [empleado.nombre, empleado.telefono].some((field) =>
       field.toLowerCase().includes(search.toLowerCase())
     )
   )
-
+  /**
+   * Alterna la selección de un empleado en la lista.
+   * 
+   * @param empleado - El empleado a ser seleccionado o deseleccionado.
+   */
   const toggleEmployeeSelection = (empleado: any) => {
     setSelectedEmployees((prevState) => {
       const isSelected = prevState.some((emp) => emp.telefono === empleado.telefono)
       return isSelected ? prevState.filter((emp) => emp.telefono !== empleado.telefono) : [...prevState, empleado]
     })
   }
-
+  /**
+  * Alterna la selección de todos los empleados en la lista filtrada.
+  */
   const toggleSelectAll = () => {
     setSelectedEmployees(
       selectedEmployees.length === filteredEmployees.length ? [] : filteredEmployees
     )
   }
-
+  /**
+ * Envía mensajes a los empleados seleccionados.
+ * 
+ * Realiza una petición al backend para enviar los mensajes y maneja las respuestas,
+ * mostrando notificaciones de éxito o error según corresponda.
+ * 
+ * @param empleadosParaEnviar - Lista de empleados a los que se les enviará el mensaje.
+ * @param mensajePersonalizado - Mensaje personalizado para los empleados seleccionados.
+ * @param mensajeSeleccionado - Identificador del mensaje predefinido seleccionado.
+ */
   //Peticion al backend para enviar mensajes
   const sendMessages = async (empleadosParaEnviar: any[], mensajePersonalizado: string, mensajeSeleccionado: string) => {
     if (empleadosParaEnviar.length === 0) {
@@ -89,12 +118,17 @@ function App() {
       console.error('Error en la petición:', error)
     }
   }
+  
+  /**
+   *  * @returns JSX.Element - El componente principal con la interfaz de usuario para la gestión de mensajes
+   */
 
   return (
     <div className='flex flex-col items-center justify-center min-h-screen p-6 w-full max-w-4xl mx-auto'>
-        <Toaster position='top-right' />
+      <img className='relative w-15  h-14 mb-2' src="./img/logooomapas.png" alt="logo Oomapas" />
+      <Toaster position='top-right' />
       <h1 className='text-3xl font-semibold mb-4 text-[#ffffff]'>Gestión de Mensajes</h1>
-      <div className='w-full shadow-xl rounded-lg p-6 mb-4 bg-bgSecundario'> 
+      <div className='w-full shadow-xl rounded-lg p-6 mb-4 bg-bgSecundario'>
         <div className='flex flex-row items-center gap-2'>
           <input
             type='text'
@@ -122,7 +156,7 @@ function App() {
                 />
               </TableHead>
               <TableHead className='p-4 text-lg text-white'>Nombre</TableHead>
-              <TableHead className='p-4 text-lg text-white'>Correo</TableHead> 
+              <TableHead className='p-4 text-lg text-white'>Correo</TableHead>
               <TableHead className='p-4 text-lg text-white'>Teléfono</TableHead>
               <TableHead className='p-4 text-lg text-white'>Acción</TableHead>
             </TableRow>

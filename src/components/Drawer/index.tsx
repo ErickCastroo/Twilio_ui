@@ -3,6 +3,13 @@ import { useState } from 'react'
 import { Drawer, DrawerContent, DrawerHeader, DrawerTitle, DrawerTrigger } from "@/components/ui/drawer"
 import { toast } from 'sonner'
 
+/**
+ * Componente para gestionar el envío de mensajes a empleados seleccionados.
+ * Este componente presenta un drawer con un formulario para seleccionar y personalizar mensajes.
+ * 
+ * @param sendMessages - Función para enviar los mensajes a los empleados seleccionados.
+ * @param selectedEmployees - Lista de empleados seleccionados a los que se les enviará el mensaje.
+ */
 function DrawerDemo({ sendMessages, selectedEmployees }: {
   sendMessages: (empleadosParaEnviar: any[], mensajePersonalizado: string, mensajeSeleccionado: string) => void
   selectedEmployees: any[]
@@ -10,10 +17,21 @@ function DrawerDemo({ sendMessages, selectedEmployees }: {
   const [message, setMessage] = useState('')
   const [selectedOption, setSelectedOption] = useState('value1')
 
+  /**
+  * Maneja el cambio en el contenido del campo de mensaje personalizado.
+  * 
+  * @param event - El evento de cambio que contiene el nuevo valor del campo de texto.
+  */
   const handleMessageChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     setMessage(event.target.value)
   }
 
+  /**
+     * Maneja el cambio en la opción seleccionada del mensaje.
+     * Si se selecciona una opción diferente a "Mensaje customizado", se limpia el mensaje.
+     * 
+     * @param event - El evento de cambio que contiene el nuevo valor de la opción seleccionada.
+     */
   const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedOption(event.target.value)
     // Limpiamos el mensaje personalizado cuando se selecciona una opción predeterminada
@@ -22,6 +40,9 @@ function DrawerDemo({ sendMessages, selectedEmployees }: {
     }
   }
 
+    /**
+   * Envía el mensaje a los empleados seleccionados, utilizando el mensaje personalizado o el predeterminado.
+   */
   const handleSendMessages = () => {
     // Si la opción seleccionada no es "Mensaje customizado", no usamos el mensaje del textarea
     const mensajePersonalizado = selectedOption === 'value1' ? message : ''
@@ -49,7 +70,7 @@ function DrawerDemo({ sendMessages, selectedEmployees }: {
               <option value="value1">Enviar mensaje customizado</option>
               <option value="descuento">Descuento</option>
               <option value="aviso">Aviso</option>
-              
+
             </select>
 
             <div className="w-full my-6">

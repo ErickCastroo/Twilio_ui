@@ -1,50 +1,37 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from 'react'
 import { Drawer, DrawerContent, DrawerHeader, DrawerTitle, DrawerTrigger } from "@/components/ui/drawer"
 import { toast } from 'sonner'
 
-/**
- * Componente para gestionar el envío de mensajes a empleados seleccionados.
- * Este componente presenta un drawer con un formulario para seleccionar y personalizar mensajes.
- * 
- * @param sendMessages - Función para enviar los mensajes a los empleados seleccionados.
- * @param selectedEmployees - Lista de empleados seleccionados a los que se les enviará el mensaje.
- */
-function DrawerDemo({ sendMessages, selectedEmployees }: {
-  sendMessages: (empleadosParaEnviar: any[], mensajePersonalizado: string, mensajeSeleccionado: string) => void
-  selectedEmployees: any[]
-}) {
+// Definimos el tipo de empleado
+interface Empleado {
+  nombre: string
+  telefono: string
+  saldoPendiente: string
+  fechaCorte: string
+}
+
+// Definimos los tipos para las propiedades del componente
+interface DrawerDemoProps {
+  sendMessages: (empleadosParaEnviar: Empleado[], mensajePersonalizado: string, mensajeSeleccionado: string) => void
+  selectedEmployees: Empleado[]
+}
+
+function DrawerDemo({ sendMessages, selectedEmployees }: DrawerDemoProps) {
   const [message, setMessage] = useState('')
   const [selectedOption, setSelectedOption] = useState('value1')
 
-  /**
-  * Maneja el cambio en el contenido del campo de mensaje personalizado.
-  * 
-  * @param event - El evento de cambio que contiene el nuevo valor del campo de texto.
-  */
   const handleMessageChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     setMessage(event.target.value)
   }
 
-  /**
-     * Maneja el cambio en la opción seleccionada del mensaje.
-     * Si se selecciona una opción diferente a "Mensaje customizado", se limpia el mensaje.
-     * 
-     * @param event - El evento de cambio que contiene el nuevo valor de la opción seleccionada.
-     */
   const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedOption(event.target.value)
-    // Limpiamos el mensaje personalizado cuando se selecciona una opción predeterminada
     if (event.target.value !== 'value1') {
-      setMessage('') // Limpiamos el textarea
+      setMessage('')
     }
   }
 
-    /**
-   * Envía el mensaje a los empleados seleccionados, utilizando el mensaje personalizado o el predeterminado.
-   */
   const handleSendMessages = () => {
-    // Si la opción seleccionada no es "Mensaje customizado", no usamos el mensaje del textarea
     const mensajePersonalizado = selectedOption === 'value1' ? message : ''
     sendMessages(selectedEmployees, mensajePersonalizado, selectedOption)
     toast.success(`Mensaje enviado a todos los usuarios seleccionados`)
@@ -56,21 +43,20 @@ function DrawerDemo({ sendMessages, selectedEmployees }: {
         Enviar
       </DrawerTrigger>
       <DrawerContent className="flex w-full items-center bg-bgSecundario dark:bg-gray-800 p-4">
-        <div className='w-full sm:w-1/2 '>
+        <div className='w-full sm:w-1/2'>
           <DrawerHeader className='w-full'>
             <DrawerTitle className='text-white'>Enviar Mensajes a los seleccionados</DrawerTitle>
           </DrawerHeader>
           <form className="w-full p-4">
             <h2 className="text-lg font-semibold text-white">Mensajes predeterminados</h2>
             <select
-              className="w-full p-2 mt-2 border border-gray-300  rounded-lg"
+              className="w-full p-2 mt-2 border border-gray-300 rounded-lg"
               value={selectedOption}
               onChange={handleSelectChange}
             >
               <option value="value1">Enviar mensaje customizado</option>
               <option value="descuento">Descuento</option>
               <option value="aviso">Aviso</option>
-
             </select>
 
             <div className="w-full my-6">
@@ -97,7 +83,6 @@ function DrawerDemo({ sendMessages, selectedEmployees }: {
             </div>
             <button
               onClick={handleSendMessages}
-
               className=" bg-white hover:hover:bg-slate-200 text-bgSecundario px-4 py-2 rounded-lg transition-all"
             >
               Enviar mensaje

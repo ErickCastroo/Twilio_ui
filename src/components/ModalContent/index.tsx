@@ -1,33 +1,40 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from 'react'
+
+// Definimos el tipo de "Empleado"
+interface Empleado {
+  nombre: string
+  telefono: string
+  saldoPendiente: string
+  fechaCorte: string
+  correo?: string // Opcional, ya que no todos los empleados tienen un correo disponible
+}
 
 /**
  * Componente para gestionar el envío de mensajes a empleado seleccionado.
  * Este componente presenta un modal con un formulario para seleccionar y personalizar mensajes.
  */
 function ModalC({ sendMessages, empleado }: {
-  sendMessages: (empleadosParaEnviar: any[], mensajePersonalizado: string, mensajeSeleccionado: string) => void
-  empleado: any // Añadimos la prop empleado
+  sendMessages: (empleadosParaEnviar: Empleado[], mensajePersonalizado: string, mensajeSeleccionado: string) => void
+  empleado: Empleado // Ahora se usa el tipo de empleado en lugar de "any"
 }) {
-  const [message, setMessage] = useState('')
-  const [selectedOption, setSelectedOption] = useState('value1')
+  const [message, setMessage] = useState<string>('') // Especificamos que el estado es un string
+  const [selectedOption, setSelectedOption] = useState<string>('value1') // Especificamos que el estado es un string
 
   /**
- * Maneja el cambio en el contenido del campo de mensaje personalizado.
- * 
- * @param event - El evento de cambio que contiene el nuevo valor del campo de texto.
- */
+   * Maneja el cambio en el contenido del campo de mensaje personalizado.
+   * 
+   * @param event - El evento de cambio que contiene el nuevo valor del campo de texto.
+   */
   const handleMessageChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     setMessage(event.target.value)
   }
 
-
   /**
-     * Maneja el cambio en la opción seleccionada del mensaje.
-     * Si se selecciona una opción diferente a "Mensaje customizado", se limpia el mensaje.
-     * 
-     * @param event - El evento de cambio que contiene el nuevo valor de la opción seleccionada.
-     */
+   * Maneja el cambio en la opción seleccionada del mensaje.
+   * Si se selecciona una opción diferente a "Mensaje customizado", se limpia el mensaje.
+   * 
+   * @param event - El evento de cambio que contiene el nuevo valor de la opción seleccionada.
+   */
   const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedOption(event.target.value)
     // Limpiamos el mensaje personalizado cuando se selecciona una opción predeterminada
@@ -35,9 +42,10 @@ function ModalC({ sendMessages, empleado }: {
       setMessage('') // Limpiamos el textarea
     }
   }
+
   /**
- * Envía el mensaje a los empleados seleccionados, utilizando el mensaje personalizado o el predeterminado.
- */
+   * Envía el mensaje a los empleados seleccionados, utilizando el mensaje personalizado o el predeterminado.
+   */
   const handleSendMessage = () => {
     // Si la opción seleccionada no es "Mensaje customizado", no usamos el mensaje del textarea
     const mensajePersonalizado = selectedOption === 'value1' ? message : ''
@@ -64,7 +72,6 @@ function ModalC({ sendMessages, empleado }: {
           <option value="value1">Enviar mensaje customizado</option>
           <option value="descuento">Descuento</option>
           <option value="aviso">Aviso</option>
-
         </select>
       </div>
 
